@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
+          leading: Container(),
           title: Text(
             'Tarefas',
             selectionColor: Colors.white,
@@ -26,9 +27,16 @@ class MyApp extends StatelessWidget {
         ),
         body: ListView(
           children: [
-            Task('Aprender Flutter'),
-            Task('Andar de bike'),
-            Task('Andar de Skate'),
+            Task('Aprender Flutter',
+                'https://docs.flutter.dev/assets/images/dash/Dashatars.png', 5),
+            Task(
+                'Andar de bike',
+                'https://salvape.com.br/blog/wp-content/uploads/2018/08/230978-reservado-priscila-pfique-por-dentro-dos-beneficios-de-andar-de-bicicleta.jpg',
+                3),
+            Task(
+                'Andar de Skate',
+                'https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcQro3ggXhRPYNm_1rvLFGrZ7DhCdB8dw4qw_bTTg_xnbZNVSQSzREaT-HGR0PcDFyqY',
+                5),
           ],
         ),
       ),
@@ -38,7 +46,9 @@ class MyApp extends StatelessWidget {
 
 class Task extends StatefulWidget {
   final String nome;
-  const Task(this.nome, {super.key});
+  final String foto;
+  final int dificuldade;
+  const Task(this.nome, this.foto, this.dificuldade, {super.key});
 
   @override
   State<Task> createState() => _TaskState();
@@ -54,36 +64,108 @@ class _TaskState extends State<Task> {
           child: Stack(
             children: [
               Container(
-                color: Colors.blue,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4), color: Colors.blue),
                 height: 140,
               ),
               Column(
                 children: [
                   Container(
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.white),
                     height: 100,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          color: Colors.black26,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: Colors.black26),
                           width: 72,
                           height: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: Image.network(
+                              widget.foto,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 200,
+                              child: (Text(widget.nome,
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      overflow: TextOverflow.ellipsis))),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.stars,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 5)
+                                      ? Colors.blue
+                                      : Colors.blue[100],
+                                ),
+                                Icon(
+                                  Icons.stars,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 5)
+                                      ? Colors.blue
+                                      : Colors.blue[100],
+                                ),
+                                Icon(
+                                  Icons.stars,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 5)
+                                      ? Colors.blue
+                                      : Colors.blue[100],
+                                ),
+                                Icon(
+                                  Icons.stars,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 5)
+                                      ? Colors.blue
+                                      : Colors.blue[100],
+                                ),
+                                Icon(
+                                  Icons.stars,
+                                  size: 15,
+                                  color: (widget.dificuldade >= 5)
+                                      ? Colors.blue
+                                      : Colors.blue[100],
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                         Container(
-                          width: 200,
-                          child: (Text(widget.nome,
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  overflow: TextOverflow.ellipsis))),
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                nivel++;
-                              });
-                            },
-                            child: Icon(Icons.arrow_drop_up))
+                          height: 82,
+                          width: 82,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  nivel++;
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Icon(Icons.arrow_drop_up),
+                                  Text(
+                                    "UP",
+                                    style: TextStyle(fontSize: 12),
+                                  )
+                                ],
+                              )),
+                        )
                       ],
                     ),
                   ),
@@ -95,7 +177,9 @@ class _TaskState extends State<Task> {
                         child: Container(
                           child: LinearProgressIndicator(
                             color: Colors.white,
-                            value: nivel / 10,
+                            value: (widget.dificuldade > 0)
+                                ? (nivel / widget.dificuldade) / 10
+                                : 1,
                           ),
                           width: 200,
                         ),
