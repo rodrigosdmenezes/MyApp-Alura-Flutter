@@ -1,4 +1,4 @@
-import 'package:app_flutter_alura/initialScreen.dart';
+import 'package:app_flutter_alura/screens/initialScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,10 +19,10 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 3, 58, 240)),
+            ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 3, 58, 240)),
         useMaterial3: true,
       ),
-      home: InitialScreen(),
+      home: const InitialScreen(),
     );
   }
 }
