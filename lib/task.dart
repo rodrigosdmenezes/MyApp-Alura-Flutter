@@ -60,7 +60,7 @@ class _TaskState extends State<Task> {
                                       fontSize: 24,
                                       overflow: TextOverflow.ellipsis))),
                             ),
-                            Difficulty( 
+                            Difficulty(
                               difficultyLevel: widget.dificuldade,
                             )
                           ],
