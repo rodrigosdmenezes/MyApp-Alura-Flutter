@@ -1,4 +1,5 @@
 import 'package:app_flutter_alura/components/task.dart';
+import 'package:app_flutter_alura/screens/formScreen.dart';
 import 'package:flutter/material.dart';
 
 class InitialScreen extends StatefulWidget {
@@ -9,8 +10,6 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<InitialScreen> {
-  bool opacidade = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,32 +21,26 @@ class _MyWidgetState extends State<InitialScreen> {
           selectionColor: Colors.white,
         ),
       ),
-      body: AnimatedOpacity(
-        opacity: opacidade ? 1 : 0,
-        duration: const Duration(milliseconds: 1000),
-        child: ListView(
-          children: const [
-            Task('Aprender Flutter',
-                'assets/images/Dashatars.png', 5),
-            Task(
-                'Andar de bike',
-                'assets/images/bike.jpg',
-                3),
-            Task(
-                'Andar de Skate',
-                'assets/images/skate.jpeg',
-                5),
-            SizedBox( height: 80, )    
-          ],
-        ),
+      body: ListView(
+        children: const [
+          Task('Aprender Flutter', 'assets/images/Dashatars.png', 5),
+          Task('Andar de bike', 'assets/images/bike.jpg', 3),
+          Task('Andar de Skate', 'assets/images/skate.jpeg', 5),
+          SizedBox(
+            height: 80,
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            opacidade = !opacidade;
-          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: ((context) => FormScreen()),
+            ),
+          );
         },
-        child: const Icon(Icons.remove_red_eye),
+        child: const Icon(Icons.add),
       ),
     );
   }

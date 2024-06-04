@@ -23,7 +23,7 @@ class _MyAppState extends State<MyApp> {
             ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 3, 58, 240)),
         useMaterial3: true,
       ),
-      home: const FormScrenn(),
+      home: const InitialScreen(),
     );
   }
 }
