@@ -74,8 +74,7 @@ class _TaskState extends State<Task> {
                               });
                             },
                             child: const Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Icon(Icons.arrow_drop_up),
@@ -108,7 +107,9 @@ class _TaskState extends State<Task> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Nível: $nivel',
-                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                        style:
+                            const TextStyle(color: 
+                            Colors.white, fontSize: 16),
                       ),
                     ),
                   ],

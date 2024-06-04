@@ -1,4 +1,5 @@
 import 'package:app_flutter_alura/components/task.dart';
+import 'package:app_flutter_alura/data/taskInherited.dart';
 import 'package:app_flutter_alura/screens/formScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,14 +23,7 @@ class _MyWidgetState extends State<InitialScreen> {
         ),
       ),
       body: ListView(
-        children: const [
-          Task('Aprender Flutter', 'assets/images/Dashatars.png', 5),
-          Task('Andar de bike', 'assets/images/bike.jpg', 3),
-          Task('Andar de Skate', 'assets/images/skate.jpeg', 5),
-          SizedBox(
-            height: 80,
-          )
-        ],
+        children: TaskInherited.of(context).taskList,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
