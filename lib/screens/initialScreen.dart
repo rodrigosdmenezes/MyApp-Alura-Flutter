@@ -1,4 +1,3 @@
-import 'package:app_flutter_alura/components/task.dart';
 import 'package:app_flutter_alura/data/taskInherited.dart';
 import 'package:app_flutter_alura/screens/formScreen.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +22,7 @@ class _MyWidgetState extends State<InitialScreen> {
         ),
       ),
       body: ListView(
+        padding: const EdgeInsets.only(top: 8, bottom: 70),
         children: TaskInherited.of(context).taskList,
       ),
       floatingActionButton: FloatingActionButton(
@@ -30,7 +30,7 @@ class _MyWidgetState extends State<InitialScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: ((context) => FormScreen()),
+              builder: ((contextNew) => FormScreen(taskContext: context,)),
             ),
           );
         },

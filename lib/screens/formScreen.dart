@@ -1,7 +1,10 @@
+import 'package:app_flutter_alura/data/taskInherited.dart';
 import 'package:flutter/material.dart';
 
 class FormScreen extends StatefulWidget {
-  const FormScreen({super.key});
+  const FormScreen({Key? key, required this.taskContext}) : super(key: key);
+
+  final BuildContext taskContext;
 
   @override
   State<FormScreen> createState() => _FormScreenState();
@@ -14,17 +17,27 @@ class _FormScreenState extends State<FormScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
+  bool valueValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return true;
+    } return false;
+  }
+
+  bool difficultyValidator(String? value){
+    if(value!.isEmpty || int.parse(value) > 5 ||
+        int.parse(value) < 1){
+        return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Nova tarefa',
-          ),
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
+          title: const Text('Nova Tarefa'),
         ),
         body: Center(
           child: SingleChildScrollView(
@@ -44,8 +57,8 @@ class _FormScreenState extends State<FormScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       validator: (String? value) {
-                        if (value != null && value.isEmpty) {
-                          return 'Campo obrigatório';
+                        if (valueValidator(value)) {
+                          return 'Insira o nome da Tarefa';
                         }
                         return null;
                       },
@@ -63,10 +76,8 @@ class _FormScreenState extends State<FormScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
                       validator: (value) {
-                        if (value!.isEmpty ||
-                            int.parse(value) > 5 ||
-                            int.parse(value) < 1) {
-                          return 'Insira um dificuldade entre 1 e 5';
+                        if (difficultyValidator(value)) {
+                          return 'Insira um Dificuldade entre 1 e 5';
                         }
                         return null;
                       },
@@ -88,8 +99,8 @@ class _FormScreenState extends State<FormScreen> {
                         setState(() {});
                       },
                       validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo obrigatório';
+                        if (valueValidator(value)) {
+                          return 'Insira um URL de Imagem!';
                         }
                         return null;
                       },
@@ -116,7 +127,7 @@ class _FormScreenState extends State<FormScreen> {
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         imageController.text,
-                        errorBuilder: (BuildContext context, Object exeception,
+                        errorBuilder: (BuildContext context, Object exception,
                             StackTrace? stackTrace) {
                           return Image.asset('assets/images/nophoto.png');
                         },
@@ -125,17 +136,22 @@ class _FormScreenState extends State<FormScreen> {
                     ),
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) ;
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        TaskInherited.of(widget.taskContext).newTask(
+                            nameController.text,
+                            imageController.text,
+                            int.parse(difficultyController.text));
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Salvando nova tarefa'),
+                            content: Text('Criando uma nova Tarefa'),
                           ),
                         );
                         Navigator.pop(context);
-
-                      },
-                      child: Text('Adicionar!'))
+                      }
+                    },
+                    child: Text('Adicionar!'),
+                  ),
                 ],
               ),
             ),
